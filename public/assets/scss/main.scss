@@ -1,0 +1,16 @@
+// Main SCSS - Apple Clone E-commerce
+// =================================
+
+// Import all SCSS modules
+@import 'variables';
+@import 'mixins';
+@import 'base';
+@import 'components';
+
+// Page-specific styles
+@import 'pages/home';
+@import 'pages/product';
+@import 'pages/cart';
+@import 'pages/checkout';
+@import 'pages/auth';
+@import 'pages/admin';
