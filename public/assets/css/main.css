@@ -43,6 +43,73 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Promo Section Styles */
+.promo-section {
+    padding: 80px 0;  /* Increased vertical padding */
+}
+
+.promo-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.promo-content .section-title {
+    margin-bottom: 24px;  /* Space after title */
+    font-family: var(--font-family-display);
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.promo-content p {
+    margin-bottom: 40px;  /* Space after paragraph */
+    line-height: 1.6;  /* Better readability */
+    font-size: 1.125rem;
+    color: var(--gray-600);
+    max-width: 600px;
+}
+
+.promo-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;  /* Space after stats */
+    width: 100%;
+    gap: 30px;  /* Space between stat items */
+}
+
+.promo-stats .stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 12px;  /* Space between number and label */
+    color: var(--primary);
+}
+
+.stat-label {
+    font-size: 1.1rem;
+    color: var(--gray-600);
+    font-weight: 500;
+}
+
+.btn.btn-secondary {
+    margin-top: 20px;  /* Space above button */
+    padding: 12px 30px;  /* Better button padding */
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn.btn-secondary i {
+    margin-right: 8px;  /* Space between icon and text */
+}
+
 .container {
   width: 100%;
   max-width: 1140px;

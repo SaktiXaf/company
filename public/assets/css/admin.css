@@ -1332,3 +1332,75 @@
         border: 1px solid var(--admin-border);
     }
 }
+
+/* Product Thumbnail Styles - Force Override */
+table .admin-product-thumb,
+.admin-table .admin-product-thumb,
+td .admin-product-thumb,
+tbody .admin-product-thumb,
+.admin-product-thumb {
+    width: 60px !important;
+    height: 60px !important;
+    max-width: 60px !important;
+    max-height: 60px !important;
+    min-width: 60px !important;
+    min-height: 60px !important;
+    object-fit: cover !important;
+    border-radius: var(--admin-radius-sm) !important;
+    border: 1px solid var(--admin-border) !important;
+    background: var(--admin-light) !important;
+    transition: transform 0.2s ease !important;
+    display: block !important;
+}
+
+.admin-product-thumb:hover {
+    transform: scale(1.05);
+}
+
+.admin-product-no-image {
+    width: 60px;
+    height: 60px;
+    background: var(--admin-light);
+    border: 1px solid var(--admin-border);
+    border-radius: var(--admin-radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--admin-text-secondary);
+    font-size: 24px;
+}
+
+/* Product table info styles */
+.admin-product-info .admin-product-name {
+    font-weight: 600;
+    color: var(--admin-text);
+    margin-bottom: 4px;
+    font-size: 14px;
+}
+
+.admin-product-info .admin-product-desc {
+    color: var(--admin-text-secondary);
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+/* Responsive thumbnail sizes */
+@media (max-width: 768px) {
+    .admin-product-thumb,
+    .admin-product-no-image {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .admin-product-no-image {
+        font-size: 20px;
+    }
+    
+    .admin-product-info .admin-product-name {
+        font-size: 13px;
+    }
+    
+    .admin-product-info .admin-product-desc {
+        font-size: 11px;
+    }
+}

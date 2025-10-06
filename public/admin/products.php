@@ -276,8 +276,8 @@ $categories = ['iPhone', 'iPad', 'Mac', 'Watch', 'Accessories'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Products Management - Apple Admin</title>
-    <link rel="stylesheet" href="../assets/css/main.css">
-    <link rel="stylesheet" href="../assets/css/admin.css">
+    <link rel="stylesheet" href="../assets/css/main.css?v=<?= time() ?>">
+    <link rel="stylesheet" href="../assets/css/admin.css?v=<?= time() ?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body class="admin-body">
@@ -497,9 +497,9 @@ $categories = ['iPhone', 'iPad', 'Mac', 'Watch', 'Accessories'];
                                         <tr>
                                             <td>
                                                 <?php if ($product['main_image']): ?>
-                                                    <img src="../<?= htmlspecialchars($product['main_image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" class="admin-product-thumb">
+                                                    <img src="../<?= htmlspecialchars($product['main_image']) ?>" alt="<?= htmlspecialchars($product['name']) ?>" class="admin-product-thumb" style="width: 60px !important; height: 60px !important; max-width: 60px !important; max-height: 60px !important; object-fit: cover !important; border-radius: 8px !important; border: 1px solid #D1D1D6 !important; display: block !important;">
                                                 <?php else: ?>
-                                                    <div class="admin-product-thumb admin-product-no-image">
+                                                    <div class="admin-product-thumb admin-product-no-image" style="width: 60px !important; height: 60px !important; max-width: 60px !important; max-height: 60px !important;">
                                                         <i class="fas fa-image"></i>
                                                     </div>
                                                 <?php endif; ?>
