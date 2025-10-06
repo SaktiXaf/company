@@ -282,7 +282,7 @@ class ProductModel {
     }
     
     //hapus produk "admin"
-    public function deleteProduct($id) {]
+    public function deleteProduct($id) {
         $success = $this->db->update('products', ['is_active' => 0], ['id' => $id]);
         
         if ($success) {

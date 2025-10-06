@@ -30,9 +30,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Handle main image upload
             $main_image = null;
             if (isset($_FILES['main_image']) && $_FILES['main_image']['error'] === UPLOAD_ERR_OK) {
-                $upload_dir = '../assets/uploads/products/';
+                // Define upload directory with absolute path
+                $upload_dir = dirname(__DIR__) . '/assets/uploads/products/';
+                
+                // Create directory if it doesn't exist
                 if (!is_dir($upload_dir)) {
-                    mkdir($upload_dir, 0755, true);
+                    if (!mkdir($upload_dir, 0755, true)) {
+                        throw new Exception('Failed to create upload directory: ' . $upload_dir);
+                    }
+                }
+                
+                // Verify directory is writable
+                if (!is_writable($upload_dir)) {
+                    throw new Exception('Upload directory is not writable: ' . $upload_dir);
                 }
                 
                 $file_info = pathinfo($_FILES['main_image']['name']);
@@ -59,6 +69,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Handle gallery images
             $gallery = [];
             if (isset($_FILES['gallery']) && !empty($_FILES['gallery']['name'][0])) {
+                // Use same upload directory as main image
+                $gallery_upload_dir = dirname(__DIR__) . '/assets/uploads/products/';
+                
                 for ($i = 0; $i < count($_FILES['gallery']['name']); $i++) {
                     if ($_FILES['gallery']['error'][$i] === UPLOAD_ERR_OK) {
                         $file_info = pathinfo($_FILES['gallery']['name'][$i]);
@@ -66,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         
                         if (in_array(strtolower($file_info['extension']), $allowed_extensions)) {
                             $new_filename = 'gallery_' . time() . '_' . $i . '_' . uniqid() . '.' . $file_info['extension'];
-                            $upload_path = $upload_dir . $new_filename;
+                            $upload_path = $gallery_upload_dir . $new_filename;
                             
                             if (move_uploaded_file($_FILES['gallery']['tmp_name'][$i], $upload_path)) {
                                 $gallery[] = 'assets/uploads/products/' . $new_filename;
@@ -125,19 +138,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $main_image = $current_product['main_image'];
             $gallery = json_decode($current_product['gallery'], true) ?: [];
             
-            // Handle main image upload
+            // Handle main image upload for update
             if (isset($_FILES['main_image']) && $_FILES['main_image']['error'] === UPLOAD_ERR_OK) {
-                $upload_dir = '../assets/uploads/products/';
-                $file_info = pathinfo($_FILES['main_image']['name']);
-                $new_filename = 'product_' . time() . '_' . uniqid() . '.' . $file_info['extension'];
-                $upload_path = $upload_dir . $new_filename;
+                // Use absolute path for upload directory
+                $upload_dir = dirname(__DIR__) . '/assets/uploads/products/';
                 
-                if (move_uploaded_file($_FILES['main_image']['tmp_name'], $upload_path)) {
-                    // Delete old image
-                    if ($main_image && file_exists('../' . $main_image)) {
-                        unlink('../' . $main_image);
+                // Ensure directory exists
+                if (!is_dir($upload_dir)) {
+                    mkdir($upload_dir, 0755, true);
+                }
+                
+                $file_info = pathinfo($_FILES['main_image']['name']);
+                $allowed_extensions = ['jpg', 'jpeg', 'png', 'gif', 'webp'];
+                
+                if (in_array(strtolower($file_info['extension']), $allowed_extensions)) {
+                    $new_filename = 'product_' . time() . '_' . uniqid() . '.' . $file_info['extension'];
+                    $upload_path = $upload_dir . $new_filename;
+                    
+                    if (move_uploaded_file($_FILES['main_image']['tmp_name'], $upload_path)) {
+                        // Delete old image
+                        if ($main_image && file_exists(dirname(__DIR__) . '/' . $main_image)) {
+                            unlink(dirname(__DIR__) . '/' . $main_image);
+                        }
+                        $main_image = 'assets/uploads/products/' . $new_filename;
+                    } else {
+                        throw new Exception('Failed to upload updated image');
                     }
-                    $main_image = 'assets/uploads/products/' . $new_filename;
                 }
             }
             

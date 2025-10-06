@@ -1,7 +1,21 @@
 <?php
+/**
+ * Role-based Redirect Helper
+ * Automatic redirection based on user role
+ */
+
+// Include session helper for consistent session management
+require_once __DIR__ . '/session-helper.php';
+
+// Ensure session is started safely
+function ensureSession() {
+    // Session is already handled by session-helper.php
+    // This function exists for backward compatibility
+    return true;
+}
 
 function redirectBasedOnRole($allowedRoles = ['customer'], $currentPage = null) {
-    session_start();
+    ensureSession();
     
     // Check if user is logged in
     if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
@@ -37,7 +51,7 @@ function redirectBasedOnRole($allowedRoles = ['customer'], $currentPage = null) 
 }
 
 function requireRole($requiredRole = 'customer') {
-    session_start();
+    ensureSession();
     
     // Check if user is logged in
     if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
@@ -75,7 +89,7 @@ function getRedirectUrl($role = null) {
 }
 
 function addRoleBasedNavigation() {
-    session_start();
+    ensureSession();
     
     if (!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) {
         return '';
